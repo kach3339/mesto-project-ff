@@ -1,13 +1,8 @@
-// @todo: Темплейт карточки
 const placeCardTemplate = document.querySelector('#card-template').content;
 
-// @todo: DOM узлы
 const placesCardContainer = document.querySelector('.places__list');
 const placeCardElement = placeCardTemplate.querySelector('.places__item');
 
-
-
-// @todo: Функция создания карточки
 function addCard(cardTitleValue, cardImageLinkValue) {
   const placeCardElementCopy = placeCardElement.cloneNode(true);
   const placeCardTitle = placeCardElementCopy.querySelector('.card__title');
@@ -17,13 +12,18 @@ function addCard(cardTitleValue, cardImageLinkValue) {
   placeCardTitle.textContent = cardTitleValue;
   placeCardImage.setAttribute('src', cardImageLinkValue);
   placeCardImage.setAttribute('alt', cardTitleValue);
-
+  
+  placeCardButtonRemove.addEventListener('click', function (){
+    deleteCard(placeCardElementCopy)
+  });
+  
   placesCardContainer.append(placeCardElementCopy);
 }
 
-// @todo: Функция удаления карточки
+const deleteCard = (placeCardElement) => {
+  placeCardElement.remove();
+};
 
-// @todo: Вывести карточки на страницу
 initialCards.forEach((item) => {
   addCard(item.name, item.link);
 });
