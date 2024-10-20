@@ -1,0 +1,19 @@
+{
+  "name": "yandex_prakticum",
+  "version": "0.0.1",
+  "description": "https://github.com/kach3339/mesto-project-ff.git",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kach3339/mesto-project-ff.git"
+  },
+  "author": "Anastasiia Kachalova",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kach3339/mesto-project-ff/issues"
+  },
+  "homepage": "https://github.com/kach3339/mesto-project-ff#readme"
+}
