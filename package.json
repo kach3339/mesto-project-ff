@@ -2,7 +2,7 @@
   "name": "yandex_prakticum",
   "version": "0.0.1",
   "description": "https://github.com/kach3339/mesto-project-ff.git",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
