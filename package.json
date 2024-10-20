@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/kach3339/mesto-project-ff/issues"
   },
-  "homepage": "https://github.com/kach3339/mesto-project-ff#readme"
+  "homepage": "https://github.com/kach3339/mesto-project-ff#readme",
+  "devDependencies": {
+    "webpack": "^5.95.0",
+    "webpack-cli": "^5.1.4"
+  }
 }
