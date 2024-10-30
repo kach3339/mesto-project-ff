@@ -20,11 +20,6 @@ profileAddButton.addEventListener('click', () => {
   openModal(popupTypeNewCard)
 });
 
-placeCardImages.forEach((placeCardImage) => {
-  placeCardImage.addEventListener('click', () => {
-    openModal(popupTypeImages)
-  });
-});
 
 popupCloseElements.forEach((popupCloseElement) => {
   popupCloseElement.addEventListener('click', closeModal);
