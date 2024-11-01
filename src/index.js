@@ -29,8 +29,12 @@ popup.forEach((popupElement) => {
   popupElement.addEventListener('click',  (evt) => {
     if (evt.target === evt.currentTarget) {
       closeModal();
-    };
+    }
   });
 });
 
-
+document.addEventListener('keydown', (event)=> {
+  if (event.key === 'Escape'){
+    closeModal();
+  }
+})
