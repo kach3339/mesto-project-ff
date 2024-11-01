@@ -37,4 +37,9 @@ document.addEventListener('keydown', (event)=> {
   if (event.key === 'Escape'){
     closeModal();
   }
-})
+});
+document.removeEventListener('keydown', (event)=> {
+  if (event.key === 'Escape'){
+    closeModal();
+  }
+});
