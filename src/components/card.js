@@ -1,5 +1,5 @@
 import {initialCards} from "../cards";
-import {placeCardTemplate, placesCardContainer, popupTypeImages} from '../index';
+import {placeCardImagePopup, placeCardTemplate, placesCardContainer, popupTypeImages} from '../index';
 import {openModal} from "./modal";
 
 export function createCard(cardData) {
@@ -13,7 +13,13 @@ export function createCard(cardData) {
   placeCardImage.src = cardData.link;
   placeCardImage.alt = cardData.name;
 
+
+
   placeCardImage.addEventListener('click', () => {
+    placeCardImagePopup.forEach((placeCardImg) => {
+      placeCardImg.src = cardData.link;
+      placeCardImg.alt = cardData.name;
+    });
     cardData.openFullImage();
   });
 
@@ -40,7 +46,7 @@ export const deleteCard = (placeCardElementForDelete) => {
   placeCardElementForDelete.remove();
 };
 
-export const openFullImage = () => {
+export const openFullImage = (cardData) => {
   openModal(popupTypeImages);
 }
 
