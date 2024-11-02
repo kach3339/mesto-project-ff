@@ -48,9 +48,7 @@ function handleEditProfileFormSubmit(evt) {
   nameProfile.textContent = nameInput.value;
   occupationProfile.textContent = jobInput.value;
 
-  closeModal()
+  closeModal();
 }
 
-// Прикрепляем обработчик к форме:
-// он будет следить за событием “submit” - «отправка»
 editProfileForm.addEventListener('submit', handleEditProfileFormSubmit);
