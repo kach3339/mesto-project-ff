@@ -6,11 +6,21 @@ const popupClose = document.querySelector('.popup__close');
 const popupTypeEdit = document.querySelector('.popup_type_edit');
 const formEditProfile = document.forms['edit-profile'];
 
+const handleEsdKey = (event)=> {
+  if (event.key === 'Escape'){
+    closeModal();
+  }
+}
+
 export function openModal (popup){
   popup.classList.add('popup_is-opened');
+
+  document.addEventListener('keydown', handleEsdKey);
 }
 
 export function closeModal (){
   const popup = document.querySelector('.popup_is-opened');
   popup.classList.remove('popup_is-opened');
+
+  document.removeEventListener('keydown', handleEsdKey);
 }
