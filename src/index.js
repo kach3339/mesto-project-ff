@@ -21,6 +21,7 @@ export const placeCardTemplate = document.querySelector('#card-template').conten
 export const placesCardContainer = document.querySelector('.places__list');
 export const popupTypeImages = document.querySelector('.popup_type_image');
 export const placeCardImagePopup = document.querySelectorAll('.popup__image');
+export const placeCardCaption = document.querySelectorAll('.popup__caption');
 
 function setupEventListeners() {
   profileEditButton.addEventListener('click', ()=> {

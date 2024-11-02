@@ -1,5 +1,5 @@
 import {initialCards} from "../cards";
-import {placeCardImagePopup, placeCardTemplate, placesCardContainer, popupTypeImages} from '../index';
+import {placeCardCaption, placeCardImagePopup, placeCardTemplate, placesCardContainer, popupTypeImages} from '../index';
 import {openModal} from "./modal";
 
 export function createCard(cardData) {
@@ -19,6 +19,9 @@ export function createCard(cardData) {
     placeCardImagePopup.forEach((placeCardImg) => {
       placeCardImg.src = cardData.link;
       placeCardImg.alt = cardData.name;
+    });
+    placeCardCaption.forEach((placeCaption) => {
+      placeCaption.textContent = cardData.name;
     });
     cardData.openFullImage();
   });
