@@ -1,10 +1,12 @@
-const profileEditButton = document.querySelector('.profile__edit-button');
-const profileAddButton = document.querySelector('.profile__add-button');
-const placeCardImage = document.querySelector('.card__image');
-const popup = document.querySelector('.popup');
-const popupClose = document.querySelector('.popup__close');
-const popupTypeEdit = document.querySelector('.popup_type_edit');
-const formEditProfile = document.forms['edit-profile'];
+import {createCard, prependCard} from "./card";
+import {
+  jobInput,
+  nameInput,
+  nameProfile,
+  occupationProfile,
+  placeLinkInput,
+  placeNameInput
+} from "../index";
 
 const handleEsdKey = (event)=> {
   if (event.key === 'Escape'){
@@ -23,4 +25,29 @@ export function closeModal (){
   popup.classList.remove('popup_is-opened');
 
   document.removeEventListener('keydown', handleEsdKey);
+}
+
+export function handleEditProfileFormSubmit(evt) {
+  evt.preventDefault();
+
+  nameProfile.textContent = nameInput.value;
+  occupationProfile.textContent = jobInput.value;
+
+  closeModal();
+}
+
+export function newCardFormSubmit(evt) {
+  evt.preventDefault();
+
+  const placeCardElement = createCard({
+    name: placeNameInput.value,
+    link: placeLinkInput.value
+  });
+
+  prependCard(placeCardElement);
+
+  placeNameInput.value = ''
+  placeLinkInput.value = ''
+
+  closeModal();
 }

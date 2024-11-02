@@ -1,5 +1,5 @@
 import {initialCards} from "../cards";
-import {openModal} from './modal';
+import {closeModal, openModal} from './modal';
 
 const placeCardTemplate = document.querySelector('#card-template').content.querySelector('.places__item');
 
@@ -27,13 +27,19 @@ export function createCard(cardData) {
   return placeCardElement;
 }
 
+export function prependCard(placeCardElement) {
+  placesCardContainer.prepend(placeCardElement);
+}
+
+export function appendCard(placeCardElement) {
+  placesCardContainer.append(placeCardElement);
+}
+
 const deleteCard = (placeCardElementForDelete) => {
   placeCardElementForDelete.remove();
 };
 
-
-
 initialCards.forEach((cardData) => {
   const placeCardElement  = createCard(cardData);
-  placesCardContainer.append(placeCardElement);
+  appendCard(placeCardElement);
 });
