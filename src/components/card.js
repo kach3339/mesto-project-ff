@@ -13,8 +13,6 @@ export function createCard(cardData) {
   placeCardImage.src = cardData.link;
   placeCardImage.alt = cardData.name;
 
-
-
   placeCardImage.addEventListener('click', () => {
     placeCardImagePopup.forEach((placeCardImg) => {
       placeCardImg.src = cardData.link;

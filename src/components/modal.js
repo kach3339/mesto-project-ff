@@ -15,15 +15,19 @@ const handleEscKey = (event)=> {
 }
 
 export function openModal (popup){
-  popup.classList.add('popup_is-opened');
+  popup.classList.add('popup_is-animated');
+  setTimeout( () => {
+    popup.classList.add('popup_is-opened');
+  }, 0);
 
   document.addEventListener('keydown', handleEscKey);
-
 }
 
 export function closeModal (){
+
   const popup = document.querySelector('.popup_is-opened');
   popup.classList.remove('popup_is-opened');
+  popup.classList.add('popup_is-animated');
 
   document.removeEventListener('keydown', handleEscKey);
 }
