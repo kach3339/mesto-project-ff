@@ -1,4 +1,4 @@
-import {createCard, prependCard} from "./card";
+import {createCard, deleteCard, likeClick, prependCard, openFullImage} from "./card";
 import {
   jobInput,
   nameInput,
@@ -41,7 +41,10 @@ export function newCardFormSubmit(evt) {
 
   const placeCardElement = createCard({
     name: placeNameInput.value,
-    link: placeLinkInput.value
+    link: placeLinkInput.value,
+    openFullImage,
+    deleteCard,
+    likeClick
   });
 
   prependCard(placeCardElement);

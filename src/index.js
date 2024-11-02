@@ -1,6 +1,6 @@
 import './pages/index.css';
 import { openModal, closeModal, handleEditProfileFormSubmit, newCardFormSubmit } from './components/modal';
-import { renderInitialCards } from './components/card';
+import {deleteCard, renderInitialCards} from './components/card';
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
@@ -19,6 +19,7 @@ export const placeNameInput = document.querySelector('.popup__input_type_card-na
 export const placeLinkInput = document.querySelector('.popup__input_type_url');
 export const placeCardTemplate = document.querySelector('#card-template').content.querySelector('.places__item');
 export const placesCardContainer = document.querySelector('.places__list');
+export const popupTypeImages = document.querySelector('.popup_type_image');
 
 function setupEventListeners() {
   profileEditButton.addEventListener('click', ()=> {
