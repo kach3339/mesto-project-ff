@@ -2,7 +2,6 @@ import {initialCards} from "../cards";
 import {closeModal, openModal} from './modal';
 
 const placeCardTemplate = document.querySelector('#card-template').content.querySelector('.places__item');
-
 const placesCardContainer = document.querySelector('.places__list');
 
 export function createCard(cardData) {

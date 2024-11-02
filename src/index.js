@@ -1,6 +1,4 @@
 import './pages/index.css';
-import { initialCards } from "./cards";
-import {createCard} from './components/card';
 import {openModal, closeModal, handleEditProfileFormSubmit, newCardFormSubmit } from './components/modal';
 
 const profileEditButton = document.querySelector('.profile__edit-button');
