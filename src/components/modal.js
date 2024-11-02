@@ -8,7 +8,7 @@ import {
   placeNameInput
 } from "../index";
 
-const handleEsdKey = (event)=> {
+const handleEscKey = (event)=> {
   if (event.key === 'Escape'){
     closeModal();
   }
@@ -17,14 +17,14 @@ const handleEsdKey = (event)=> {
 export function openModal (popup){
   popup.classList.add('popup_is-opened');
 
-  document.addEventListener('keydown', handleEsdKey);
+  document.addEventListener('keydown', handleEscKey);
 }
 
 export function closeModal (){
   const popup = document.querySelector('.popup_is-opened');
   popup.classList.remove('popup_is-opened');
 
-  document.removeEventListener('keydown', handleEsdKey);
+  document.removeEventListener('keydown', handleEscKey);
 }
 
 export function handleEditProfileFormSubmit(evt) {

@@ -1,8 +1,6 @@
 import {initialCards} from "../cards";
-import {closeModal, openModal} from './modal';
-
-const placeCardTemplate = document.querySelector('#card-template').content.querySelector('.places__item');
-const placesCardContainer = document.querySelector('.places__list');
+import {placeCardTemplate, placesCardContainer} from '../index';
+import {openModal} from "./modal";
 
 export function createCard(cardData) {
   const placeCardElement = placeCardTemplate.cloneNode(true);
@@ -34,11 +32,13 @@ export function appendCard(placeCardElement) {
   placesCardContainer.append(placeCardElement);
 }
 
-const deleteCard = (placeCardElementForDelete) => {
+export const deleteCard = (placeCardElementForDelete) => {
   placeCardElementForDelete.remove();
 };
 
-initialCards.forEach((cardData) => {
-  const placeCardElement  = createCard(cardData);
-  appendCard(placeCardElement);
-});
+export const renderInitialCards = () => {
+  initialCards.forEach((cardData) => {
+    const placeCardElement  = createCard(cardData);
+    appendCard(placeCardElement);
+  });
+}
