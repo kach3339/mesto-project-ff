@@ -44,6 +44,8 @@ function setupEventListeners() {
   });
 
   popup.forEach((popupElement) => {
+    popupElement.classList.add('popup_is-animated');
+
     popupElement.addEventListener('mousedown',  (evt) => {
       if (evt.target === evt.currentTarget) {
         closeModal(popupElement);

@@ -17,18 +17,13 @@ const handleEscKey = (event)=> {
 };
 
 export function openModal (popup){
-  popup.classList.add('popup_is-animated');
-
-  setTimeout( () => {
-    popup.classList.add('popup_is-opened');
-  }, 0);
+  popup.classList.add('popup_is-opened');
 
   document.addEventListener('keydown', handleEscKey);
 }
 
 export function closeModal(popup){
   popup.classList.remove('popup_is-opened');
-  popup.classList.add('popup_is-animated');
 
   document.removeEventListener('keydown', handleEscKey);
 }
