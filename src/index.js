@@ -9,7 +9,7 @@ import {initialCards} from "./cards";
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
-const popup = document.querySelectorAll('.popup');
+const popups = document.querySelectorAll('.popup');
 const popupCloseElements = document.querySelectorAll('.popup__close');
 const popupTypeEdit = document.querySelector('.popup_type_edit');
 const popupTypeNewCard = document.querySelector('.popup_type_new-card');
@@ -41,9 +41,7 @@ function handleEditProfileFormSubmit(evt) {
   nameProfile.textContent = nameInput.value;
   occupationProfile.textContent = jobInput.value;
 
-  const popup = evt.target.closest('.popup_is-opened');
-
-  closeModal(popup);
+  closeModal(popupTypeEdit);
 }
 
 function prependCard(placeCardElement) {
@@ -74,9 +72,7 @@ function newCardFormSubmit(evt) {
   placeNameInput.value = '';
   placeLinkInput.value = '';
 
-  const popup = evt.target.closest('.popup_is-opened');
-
-  closeModal(popup);
+  closeModal(popupTypeNewCard);
 }
 
 function setupEventListeners() {
@@ -91,16 +87,14 @@ function setupEventListeners() {
     openModal(popupTypeNewCard);
   });
 
-  popupCloseElements.forEach((popupCloseElement) => {
-    popupCloseElement.addEventListener('click', () => {
-      const popup = popupCloseElement.closest('.popup_is-opened')
+  popups.forEach((popupElement) => {
+    const closeButton = popupElement.querySelector('.popup__close');
 
-      closeModal(popup)
-    });
-  });
-
-  popup.forEach((popupElement) => {
     popupElement.classList.add('popup_is-animated');
+
+    closeButton.addEventListener('click', () => {
+      closeModal(popupElement);
+    });
 
     popupElement.addEventListener('mousedown',  (evt) => {
       if (evt.target === evt.currentTarget) {
