@@ -66,4 +66,4 @@ export const renderInitialCards = () => {
     });
     appendCard(placeCardElement);
   });
-}
+};

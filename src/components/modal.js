@@ -12,7 +12,7 @@ const handleEscKey = (event)=> {
   if (event.key === 'Escape'){
     closeModal();
   }
-}
+};
 
 export function openModal (popup){
   popup.classList.add('popup_is-animated');
