@@ -14,13 +14,9 @@ export function createCard(cardData, eventListeners) {
   placeCardImage.alt = cardData.name;
 
   placeCardImage.addEventListener('click', () => {
-    placeCardImagePopup.forEach((placeCardImg) => {
-      placeCardImg.src = cardData.link;
-      placeCardImg.alt = cardData.name;
-    });
-    placeCardCaption.forEach((placeCaption) => {
-      placeCaption.textContent = cardData.name;
-    });
+    placeCardImagePopup.src = cardData.link;
+    placeCardImagePopup.alt = cardData.name;
+    placeCardCaption.textContent = cardData.name;
     eventListeners.openFullImage();
   });
 

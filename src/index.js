@@ -20,8 +20,8 @@ export const placeLinkInput = document.querySelector('.popup__input_type_url');
 export const placeCardTemplate = document.querySelector('#card-template').content.querySelector('.places__item');
 export const placesCardContainer = document.querySelector('.places__list');
 export const popupTypeImages = document.querySelector('.popup_type_image');
-export const placeCardImagePopup = document.querySelectorAll('.popup__image');
-export const placeCardCaption = document.querySelectorAll('.popup__caption');
+export const placeCardImagePopup = document.querySelector('.popup__image');
+export const placeCardCaption = document.querySelector('.popup__caption');
 
 function setupEventListeners() {
   profileEditButton.addEventListener('click', ()=> {
