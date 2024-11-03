@@ -2,7 +2,7 @@ import {initialCards} from "../cards";
 import {placeCardCaption, placeCardImagePopup, placeCardTemplate, placesCardContainer, popupTypeImages} from '../index';
 import {openModal} from "./modal";
 
-export function createCard(cardData) {
+export function createCard(cardData, eventListeners) {
   const placeCardElement = placeCardTemplate.cloneNode(true);
   const placeCardTitle = placeCardElement.querySelector('.card__title');
   const placeCardImage = placeCardElement.querySelector('.card__image');
@@ -21,15 +21,15 @@ export function createCard(cardData) {
     placeCardCaption.forEach((placeCaption) => {
       placeCaption.textContent = cardData.name;
     });
-    cardData.openFullImage();
+    eventListeners.openFullImage();
   });
 
   placeCardButtonRemove.addEventListener('click', function (){
-    cardData.deleteCard(placeCardElement);
+    eventListeners.deleteCard(placeCardElement);
   });
 
   likeButton.addEventListener('click', function (){
-    cardData.likeClick(likeButton);
+    eventListeners.likeClick(likeButton);
   });
 
   return placeCardElement;
@@ -57,13 +57,14 @@ export const likeClick = (likeButton) => {
 
 export const renderInitialCards = () => {
   initialCards.forEach((cardData) => {
-    const placeCardElement  = createCard({
-      name: cardData.name,
-      link: cardData.link,
-      openFullImage,
-      deleteCard,
-      likeClick
-    });
+    const placeCardElement  = createCard(
+      cardData,
+      {
+        openFullImage,
+        deleteCard,
+        likeClick
+      }
+    );
     appendCard(placeCardElement);
   });
 };

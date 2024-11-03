@@ -16,6 +16,7 @@ const handleEscKey = (event)=> {
 
 export function openModal (popup){
   popup.classList.add('popup_is-animated');
+
   setTimeout( () => {
     popup.classList.add('popup_is-opened');
   }, 0);
@@ -24,8 +25,8 @@ export function openModal (popup){
 }
 
 export function closeModal (){
-
   const popup = document.querySelector('.popup_is-opened');
+
   popup.classList.remove('popup_is-opened');
   popup.classList.add('popup_is-animated');
 
@@ -44,13 +45,17 @@ export function handleEditProfileFormSubmit(evt) {
 export function newCardFormSubmit(evt) {
   evt.preventDefault();
 
-  const placeCardElement = createCard({
-    name: placeNameInput.value,
-    link: placeLinkInput.value,
-    openFullImage,
-    deleteCard,
-    likeClick
-  });
+  const placeCardElement = createCard(
+    {
+      name: placeNameInput.value,
+      link: placeLinkInput.value
+    },
+    {
+      openFullImage,
+      deleteCard,
+      likeClick
+    }
+  );
 
   prependCard(placeCardElement);
 
