@@ -1,6 +1,4 @@
-import {initialCards} from "../cards";
-import {placeCardCaption, placeCardImagePopup, placeCardTemplate, placesCardContainer, popupTypeImages} from '../index';
-import {openModal} from "./modal";
+const placeCardTemplate = document.querySelector('#card-template').content.querySelector('.places__item');
 
 export function createCard(cardData, eventListeners) {
   const placeCardElement = placeCardTemplate.cloneNode(true);
@@ -14,10 +12,7 @@ export function createCard(cardData, eventListeners) {
   placeCardImage.alt = cardData.name;
 
   placeCardImage.addEventListener('click', () => {
-    placeCardImagePopup.src = cardData.link;
-    placeCardImagePopup.alt = cardData.name;
-    placeCardCaption.textContent = cardData.name;
-    eventListeners.openFullImage();
+    eventListeners.openFullImage(cardData);
   });
 
   placeCardButtonRemove.addEventListener('click', function (){
@@ -31,36 +26,11 @@ export function createCard(cardData, eventListeners) {
   return placeCardElement;
 }
 
-export function prependCard(placeCardElement) {
-  placesCardContainer.prepend(placeCardElement);
-}
-
-export function appendCard(placeCardElement) {
-  placesCardContainer.append(placeCardElement);
-}
-
 export const deleteCard = (placeCardElementForDelete) => {
   placeCardElementForDelete.remove();
 };
-
-export const openFullImage = (cardData) => {
-  openModal(popupTypeImages);
-}
 
 export const likeClick = (likeButton) => {
   likeButton.classList.toggle('card__like-button_is-active');
 };
 
-export const renderInitialCards = () => {
-  initialCards.forEach((cardData) => {
-    const placeCardElement  = createCard(
-      cardData,
-      {
-        openFullImage,
-        deleteCard,
-        likeClick
-      }
-    );
-    appendCard(placeCardElement);
-  });
-};
