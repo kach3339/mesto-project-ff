@@ -12,7 +12,10 @@ export function createCard(cardData, eventListeners) {
   placeCardImage.alt = cardData.name;
 
   placeCardImage.addEventListener('click', () => {
-    eventListeners.openFullImage(cardData);
+    eventListeners.openFullImage({
+      name: cardData.name,
+      link: cardData.link
+    });
   });
 
   placeCardButtonRemove.addEventListener('click', function (){

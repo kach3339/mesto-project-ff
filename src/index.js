@@ -27,10 +27,10 @@ const popupTypeImages = document.querySelector('.popup_type_image');
 const placeCardImagePopup = document.querySelector('.popup__image');
 const placeCardCaption = document.querySelector('.popup__caption');
 
-const openFullImage = (cardData) => {
-  placeCardImagePopup.src = cardData.link;
-  placeCardImagePopup.alt = cardData.name;
-  placeCardCaption.textContent = cardData.name;
+const openFullImage = (imagePopupData) => {
+  placeCardImagePopup.src = imagePopupData.link;
+  placeCardImagePopup.alt = imagePopupData.name;
+  placeCardCaption.textContent = imagePopupData.name;
 
   openModal(popupTypeImages);
 }
