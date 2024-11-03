@@ -10,7 +10,9 @@ import {
 
 const handleEscKey = (event)=> {
   if (event.key === 'Escape'){
-    closeModal();
+    const openedPopup = document.querySelector('.popup_is-opened');
+
+    closeModal(openedPopup);
   }
 };
 
@@ -24,9 +26,7 @@ export function openModal (popup){
   document.addEventListener('keydown', handleEscKey);
 }
 
-export function closeModal (){
-  const popup = document.querySelector('.popup_is-opened');
-
+export function closeModal(popup){
   popup.classList.remove('popup_is-opened');
   popup.classList.add('popup_is-animated');
 
@@ -39,7 +39,9 @@ export function handleEditProfileFormSubmit(evt) {
   nameProfile.textContent = nameInput.value;
   occupationProfile.textContent = jobInput.value;
 
-  closeModal();
+  const popup = evt.target.closest('.popup_is-opened');
+
+  closeModal(popup);
 }
 
 export function newCardFormSubmit(evt) {
@@ -62,5 +64,7 @@ export function newCardFormSubmit(evt) {
   placeNameInput.value = ''
   placeLinkInput.value = ''
 
-  closeModal();
+  const popup = evt.target.closest('.popup_is-opened');
+
+  closeModal(popup);
 }

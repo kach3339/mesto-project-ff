@@ -36,13 +36,17 @@ function setupEventListeners() {
   });
 
   popupCloseElements.forEach((popupCloseElement) => {
-    popupCloseElement.addEventListener('click', closeModal);
+    popupCloseElement.addEventListener('click', () => {
+      const popup = popupCloseElement.closest('.popup_is-opened')
+
+      closeModal(popup)
+    });
   });
 
   popup.forEach((popupElement) => {
     popupElement.addEventListener('mousedown',  (evt) => {
       if (evt.target === evt.currentTarget) {
-        closeModal();
+        closeModal(popupElement);
       }
     });
   });
