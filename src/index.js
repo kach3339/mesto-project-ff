@@ -26,13 +26,21 @@ const placesCardContainer = document.querySelector('.places__list');
 const popupTypeImages = document.querySelector('.popup_type_image');
 const placeCardImagePopup = document.querySelector('.popup__image');
 const placeCardCaption = document.querySelector('.popup__caption');
-const form = document.querySelector('.popup__form');
 
 const resetFormValidation = formElement => {
   const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
 
   inputList.forEach((inputElement) => {
     hideInputError(formElement, inputElement);
+  });
+};
+
+const resetFormCardCreate = formElement => {
+  const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
+
+  inputList.forEach((inputElement) => {
+    hideInputError(formElement, inputElement);
+    formElement.reset();
   });
 };
 
@@ -91,6 +99,13 @@ const openModalWithForm = modalWithForm => {
   resetFormValidation(form);
 };
 
+const openModalCreateCard = modalWithForm => {
+  const form = modalWithForm.querySelector('.popup__form')
+
+  openModal(modalWithForm);
+  resetFormCardCreate(form);
+};
+
 const setupEventListeners = () => {
   profileEditButton.addEventListener('click', () => {
     nameInput.value = nameProfile.textContent;
@@ -100,7 +115,7 @@ const setupEventListeners = () => {
   });
 
   profileAddButton.addEventListener('click', () => {
-    openModalWithForm(popupTypeNewCard);
+    openModalCreateCard(popupTypeNewCard);
   });
 
   popups.forEach((popupElement) => {
