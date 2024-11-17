@@ -28,7 +28,7 @@ const placeCardImagePopup = document.querySelector('.popup__image');
 const placeCardCaption = document.querySelector('.popup__caption');
 const form = document.querySelector('.popup__form');
 
-const resetForm = formElement => {
+const resetFormValidation = formElement => {
   const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
 
   inputList.forEach((inputElement) => {
@@ -88,7 +88,7 @@ const openModalWithForm = modalWithForm => {
   const form = modalWithForm.querySelector('.popup__form')
 
   openModal(modalWithForm);
-  resetForm(form);
+  resetFormValidation(form);
 };
 
 const setupEventListeners = () => {
