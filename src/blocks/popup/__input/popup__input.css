@@ -10,6 +10,17 @@
   margin-bottom: 10px;
 }
 
+.popup__input_type_error {
+  border-bottom-color: #FF0000;
+  color: #FF0000;
+  /* Нижняя рамка становится красной всякий раз,
+  когда введённые данные некорректны */
+}
+
+.form__input-error_active {
+  color: #FF0000;
+}
+
 .popup__input:last-of-type {
   margin-bottom: 0;
 }
