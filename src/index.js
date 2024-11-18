@@ -36,6 +36,15 @@ const validationConfig = {
 }
 
 /// api
+const fetchUser = () => {
+  return fetch('https://nomoreparties.co/v1/wff-cohort-27/users/me', {
+    headers: {
+      authorization: 'a5b41191-4295-4942-b6d9-1f6a428d0b55'
+    }
+  })
+    .then(res => res.json());
+}
+
 const fetchInitialCards = () => {
   return fetch('https://nomoreparties.co/v1/wff-cohort-27/cards', {
     headers: {
@@ -130,6 +139,10 @@ const setupEventListeners = () => {
   creatCardForm.addEventListener('submit', newCardFormSubmit);
 };
 
+const renderInitialUser = (user) => {
+
+}
+
 const renderInitialCards = (initialCards) => {
   initialCards.forEach((cardData) => {
     const placeCardElement = createCard(
@@ -146,9 +159,10 @@ const renderInitialCards = (initialCards) => {
 
 setupEventListeners();
 
-fetchInitialCards()
-  .then(renderInitialCards);
+Promise.all([fetchUser(), fetchInitialCards()])
+  .then(([user, initialCards]) => {
+    renderInitialUser(user);
+    renderInitialCards(initialCards);
+  });
 
 enableValidation(validationConfig);
-
-
