@@ -5,7 +5,6 @@ import {
   deleteCard,
   likeClick
 } from './components/card';
-import {initialCards} from "./cards";
 import {enableValidation, clearValidation} from './components/validation'
 
 const profileEditButton = document.querySelector('.profile__edit-button');
@@ -36,7 +35,15 @@ const validationConfig = {
   activeErrorClass: 'form__input-error_active'
 }
 
-
+/// api
+const fetchInitialCards = () => {
+  return fetch('https://nomoreparties.co/v1/wff-cohort-27/cards', {
+    headers: {
+      authorization: 'a5b41191-4295-4942-b6d9-1f6a428d0b55'
+    }
+  })
+    .then(res => res.json());
+}
 
 const openFullImage = (imagePopupData) => {
   placeCardImagePopup.src = imagePopupData.link;
@@ -123,7 +130,7 @@ const setupEventListeners = () => {
   creatCardForm.addEventListener('submit', newCardFormSubmit);
 };
 
-const renderInitialCards = () => {
+const renderInitialCards = (initialCards) => {
   initialCards.forEach((cardData) => {
     const placeCardElement = createCard(
       cardData,
@@ -138,7 +145,10 @@ const renderInitialCards = () => {
 };
 
 setupEventListeners();
-renderInitialCards();
-//form Work
+
+fetchInitialCards()
+  .then(renderInitialCards);
 
 enableValidation(validationConfig);
+
+
