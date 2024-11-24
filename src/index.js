@@ -17,6 +17,7 @@ const creatCardForm = document.forms['new-place'];
 
 const nameProfile = document.querySelector('.profile__title')
 const occupationProfile = document.querySelector('.profile__description');
+const imageProfile = document.querySelector('.profile__image');
 const nameInput = document.querySelector('.popup__input_type_name');
 const jobInput = document.querySelector('.popup__input_type_description');
 const placeNameInput = document.querySelector('.popup__input_type_card-name');
@@ -54,6 +55,36 @@ const fetchInitialCards = () => {
     .then(res => res.json());
 }
 
+const submitUserInfo = (nameInputText,jobInputText) => {
+  return fetch('https://nomoreparties.co/v1/wff-cohort-27/users/me', {
+    method: 'PATCH',
+    headers: {
+      authorization: 'a5b41191-4295-4942-b6d9-1f6a428d0b55',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      name: nameInputText,
+      about: jobInputText
+    })
+  })
+    .then(res => res.json());
+}
+
+const submitNewCard = (cardName, cardLink) => {
+  return fetch('https://nomoreparties.co/v1/wff-cohort-27/cards', {
+    method: 'POST',
+    headers: {
+      authorization: 'a5b41191-4295-4942-b6d9-1f6a428d0b55',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      name: cardName,
+      link: cardLink
+    })
+  })
+    .then(res => res.json());
+}
+
 const openFullImage = (imagePopupData) => {
   placeCardImagePopup.src = imagePopupData.link;
   placeCardImagePopup.alt = imagePopupData.name;
@@ -65,8 +96,10 @@ const openFullImage = (imagePopupData) => {
 const handleEditProfileFormSubmit = evt => {
   evt.preventDefault();
 
-  nameProfile.textContent = nameInput.value;
-  occupationProfile.textContent = jobInput.value;
+  submitUserInfo(nameInput.value, jobInput.value)
+    .then((user) => {
+      renderUser(user);
+    });
 
   closeModal(popupTypeEdit);
 };
@@ -82,19 +115,19 @@ const appendCard = placeCardElement => {
 const newCardFormSubmit = evt => {
   evt.preventDefault();
 
-  const placeCardElement = createCard(
-    {
-      name: placeNameInput.value,
-      link: placeLinkInput.value
-    },
-    {
-      openFullImage,
-      deleteCard,
-      likeClick
-    }
-  );
+  submitNewCard(placeNameInput.value, placeLinkInput.value)
+    .then(card => {
+      const placeCardElement = createCard(
+        card,
+        {
+          openFullImage,
+          deleteCard,
+          likeClick
+        }
+      );
 
-  prependCard(placeCardElement);
+      prependCard(placeCardElement);
+    });
 
   placeNameInput.value = '';
   placeLinkInput.value = '';
@@ -139,11 +172,13 @@ const setupEventListeners = () => {
   creatCardForm.addEventListener('submit', newCardFormSubmit);
 };
 
-const renderInitialUser = (user) => {
-
+const renderUser = (user) => {
+  nameProfile.textContent = user.name;
+  occupationProfile.textContent = user.about;
+  imageProfile.style.backgroundImage = `url('${user.avatar}')`;
 }
 
-const renderInitialCards = (initialCards) => {
+const renderCards = (initialCards) => {
   initialCards.forEach((cardData) => {
     const placeCardElement = createCard(
       cardData,
@@ -161,8 +196,8 @@ setupEventListeners();
 
 Promise.all([fetchUser(), fetchInitialCards()])
   .then(([user, initialCards]) => {
-    renderInitialUser(user);
-    renderInitialCards(initialCards);
+    renderUser(user);
+    renderCards(initialCards);
   });
 
 enableValidation(validationConfig);

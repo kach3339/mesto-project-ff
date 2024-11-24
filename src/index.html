@@ -14,11 +14,11 @@
   </header>
   <main class="content">
     <section class="profile page__section">
-      <div class="profile__image" style="background-image: url('<%=require('./images/avatar.jpg')%>');"></div>
+      <div class="profile__image"></div>
       <div class="profile__info">
-        <h1 class="profile__title">Жак-Ив Кусто</h1>
+        <h1 class="profile__title">...</h1>
         <button class="profile__edit-button" type="button"></button>
-        <p class="profile__description">Исследователь океана</p>
+        <p class="profile__description">...</p>
       </div>
       <button class="profile__add-button" type="button"></button>
     </section>
@@ -53,7 +53,7 @@
       <form class="popup__form" name="new-place">
         <input id="title-input" type="text" name="place-name" class="popup__input popup__input_type_card-name" placeholder="Название" required minlength="2" maxlength="30" pattern="^[a-zA-Zа-яА-ЯёЁ\s\-]+$" data-error-message="Поле может содержать только латинские и кириллические буквы, знаки дефиса и пробелы">
         <span class="title-input-error form__input-error"></span>
-        <input id="link-input" type="url" name="link" class="popup__input popup__input_type_url" placeholder="Ссылка на картинку" required pattern="^((https?|ftp|smtp):\/\/)?(www.)?[a-z0-9]+\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*$" data-error-message="Поле может содержать только URL">
+        <input id="link-input" type="url" name="link" class="popup__input popup__input_type_url" placeholder="Ссылка на картинку" required pattern="^(https?:\/\/.*)" data-error-message="Поле может содержать только URL">
         <span class="link-input-error form__input-error"></span>
         <button type="submit" class="button popup__button">Сохранить</button>
       </form>
