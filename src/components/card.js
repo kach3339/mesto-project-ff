@@ -6,10 +6,12 @@ export function createCard(cardData, eventListeners) {
   const placeCardImage = placeCardElement.querySelector('.card__image');
   const placeCardButtonRemove = placeCardElement.querySelector('.card__delete-button');
   const likeButton = placeCardElement.querySelector('.card__like-button');
+  const likesQuantity = placeCardElement.querySelector('.card__like-quantity');
 
   placeCardTitle.textContent = cardData.name;
   placeCardImage.src = cardData.link;
   placeCardImage.alt = cardData.name;
+  likesQuantity.textContent = cardData.likes.length;
 
   placeCardImage.addEventListener('click', () => {
     eventListeners.openFullImage({
