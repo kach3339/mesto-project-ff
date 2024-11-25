@@ -67,9 +67,20 @@
     </div>
   </div>
 </div>
+<div class="popup popup_type_card-delete">
+  <div class="popup__content popup__content_no-min-height">
+    <button type="button" class="popup__close"></button>
+    <h3 class="popup__title">Вы уверены?</h3>
+    <form class="popup__form" name="delete-card">
+      <button type="submit" class="button popup__button" data-card-id="">
+        Да
+      </button>
+    </form>
+  </div>
+</div>
 
 <template id="card-template">
-  <li class="places__item card">
+  <li id="" class="places__item card">
     <img class="card__image" src="" alt="" />
     <button type="button" class="card__delete-button"></button>
     <div class="card__description">

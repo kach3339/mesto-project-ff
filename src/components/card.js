@@ -8,6 +8,7 @@ export function createCard({cardData, showRemoveButton, eventListeners}) {
   const likeButton = placeCardElement.querySelector('.card__like-button');
   const likesQuantity = placeCardElement.querySelector('.card__like-quantity');
 
+  placeCardElement.id = cardData._id;
   placeCardTitle.textContent = cardData.name;
   placeCardImage.src = cardData.link;
   placeCardImage.alt = cardData.name;
@@ -25,7 +26,7 @@ export function createCard({cardData, showRemoveButton, eventListeners}) {
   });
 
   placeCardButtonRemove.addEventListener('click', function (){
-    eventListeners.deleteCard(placeCardElement);
+    eventListeners.deleteClick(cardData._id);
   });
 
   likeButton.addEventListener('click', function (){

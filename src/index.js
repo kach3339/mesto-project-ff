@@ -12,8 +12,11 @@ const profileAddButton = document.querySelector('.profile__add-button');
 const popups = document.querySelectorAll('.popup');
 const popupTypeEdit = document.querySelector('.popup_type_edit');
 const popupTypeNewCard = document.querySelector('.popup_type_new-card');
+const popupTypeImages = document.querySelector('.popup_type_image');
+const popupTypeCardDelete = document.querySelector('.popup_type_card-delete');
 const editProfileForm = document.forms['edit-profile'];
-const creatCardForm = document.forms['new-place'];
+const createCardForm = document.forms['new-place'];
+const deleteCardForm = document.forms['delete-card'];
 
 const nameProfile = document.querySelector('.profile__title')
 const occupationProfile = document.querySelector('.profile__description');
@@ -23,7 +26,6 @@ const jobInput = document.querySelector('.popup__input_type_description');
 const placeNameInput = document.querySelector('.popup__input_type_card-name');
 const placeLinkInput = document.querySelector('.popup__input_type_url');
 const placesCardContainer = document.querySelector('.places__list');
-const popupTypeImages = document.querySelector('.popup_type_image');
 const placeCardImagePopup = document.querySelector('.popup__image');
 const placeCardCaption = document.querySelector('.popup__caption');
 
@@ -85,12 +87,30 @@ const submitNewCard = (cardName, cardLink) => {
     .then(res => res.json());
 }
 
+const deleteCardById = (cardId) => {
+  return fetch(`https://nomoreparties.co/v1/wff-cohort-27/cards/${cardId}`, {
+    method: 'DELETE',
+    headers: {
+      authorization: 'a5b41191-4295-4942-b6d9-1f6a428d0b55',
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(res => res.json());
+}
+
 const openFullImage = (imagePopupData) => {
   placeCardImagePopup.src = imagePopupData.link;
   placeCardImagePopup.alt = imagePopupData.name;
   placeCardCaption.textContent = imagePopupData.name;
 
   openModal(popupTypeImages);
+}
+
+const openCardDeleteModal = (cardId) => {
+  const submitButton = popupTypeCardDelete.querySelector('.popup__button');
+  submitButton.dataset.cardId = cardId;
+
+  openModal(popupTypeCardDelete);
 }
 
 const handleEditProfileFormSubmit = evt => {
@@ -123,7 +143,7 @@ const newCardFormSubmit = evt => {
           showRemoveButton: true,
           eventListeners: {
             openFullImage,
-            deleteCard,
+            deleteClick: openCardDeleteModal,
             likeClick
           }
         }
@@ -138,6 +158,20 @@ const newCardFormSubmit = evt => {
   closeModal(popupTypeNewCard);
 };
 
+const deleteCardFormSubmit = evt => {
+  evt.preventDefault();
+
+  const submitButton = popupTypeCardDelete.querySelector('.popup__button');
+  const cardId = submitButton.dataset.cardId;
+  const cardElementToDelete = document.getElementById(cardId);
+
+  deleteCardById(cardId)
+    .then(()=> {
+      deleteCard(cardElementToDelete);
+      closeModal(popupTypeCardDelete);
+    });
+}
+
 const setupEventListeners = () => {
   profileEditButton.addEventListener('click', () => {
     nameInput.value = nameProfile.textContent;
@@ -150,8 +184,8 @@ const setupEventListeners = () => {
   profileAddButton.addEventListener('click', () => {
     openModal(popupTypeNewCard);
 
-    creatCardForm.reset();
-    clearValidation(creatCardForm, validationConfig);
+    createCardForm.reset();
+    clearValidation(createCardForm, validationConfig);
   });
 
   popups.forEach((popupElement) => {
@@ -172,7 +206,9 @@ const setupEventListeners = () => {
 
   editProfileForm.addEventListener('submit', handleEditProfileFormSubmit);
 
-  creatCardForm.addEventListener('submit', newCardFormSubmit);
+  createCardForm.addEventListener('submit', newCardFormSubmit);
+
+  deleteCardForm.addEventListener('click', deleteCardFormSubmit);
 };
 
 const renderUser = (user) => {
@@ -189,7 +225,7 @@ const renderCards = (initialCards, user) => {
       showRemoveButton,
       eventListeners: {
         openFullImage,
-        deleteCard,
+        deleteClick: openCardDeleteModal,
         likeClick
       }
     });
