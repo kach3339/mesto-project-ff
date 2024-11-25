@@ -1,6 +1,6 @@
 const placeCardTemplate = document.querySelector('#card-template').content.querySelector('.places__item');
 
-export function createCard(cardData, eventListeners) {
+export function createCard({cardData, showRemoveButton, eventListeners}) {
   const placeCardElement = placeCardTemplate.cloneNode(true);
   const placeCardTitle = placeCardElement.querySelector('.card__title');
   const placeCardImage = placeCardElement.querySelector('.card__image');
@@ -12,6 +12,10 @@ export function createCard(cardData, eventListeners) {
   placeCardImage.src = cardData.link;
   placeCardImage.alt = cardData.name;
   likesQuantity.textContent = cardData.likes.length;
+
+  if (!showRemoveButton) {
+    placeCardButtonRemove.remove();
+  }
 
   placeCardImage.addEventListener('click', () => {
     eventListeners.openFullImage({

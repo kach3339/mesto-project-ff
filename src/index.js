@@ -118,11 +118,14 @@ const newCardFormSubmit = evt => {
   submitNewCard(placeNameInput.value, placeLinkInput.value)
     .then(card => {
       const placeCardElement = createCard(
-        card,
         {
-          openFullImage,
-          deleteCard,
-          likeClick
+          cardData: card,
+          showRemoveButton: true,
+          eventListeners: {
+            openFullImage,
+            deleteCard,
+            likeClick
+          }
         }
       );
 
@@ -178,16 +181,18 @@ const renderUser = (user) => {
   imageProfile.style.backgroundImage = `url('${user.avatar}')`;
 }
 
-const renderCards = (initialCards) => {
+const renderCards = (initialCards, user) => {
   initialCards.forEach((cardData) => {
-    const placeCardElement = createCard(
+    const showRemoveButton = user._id === cardData.owner._id;
+    const placeCardElement = createCard({
       cardData,
-      {
+      showRemoveButton,
+      eventListeners: {
         openFullImage,
         deleteCard,
         likeClick
       }
-    );
+    });
     appendCard(placeCardElement);
   });
 };
@@ -197,7 +202,7 @@ setupEventListeners();
 Promise.all([fetchUser(), fetchInitialCards()])
   .then(([user, initialCards]) => {
     renderUser(user);
-    renderCards(initialCards);
+    renderCards(initialCards, user);
   });
 
 enableValidation(validationConfig);
