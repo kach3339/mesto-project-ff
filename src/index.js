@@ -6,6 +6,7 @@ import {
   likeClick
 } from './components/card';
 import {enableValidation, clearValidation} from './components/validation'
+import {request} from "./components/api";
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
@@ -40,62 +41,46 @@ const validationConfig = {
 
 /// api
 const fetchUser = () => {
-  return fetch('https://nomoreparties.co/v1/wff-cohort-27/users/me', {
-    headers: {
-      authorization: 'a5b41191-4295-4942-b6d9-1f6a428d0b55'
-    }
-  })
-    .then(res => res.json());
+  return request({
+    route: 'users/me',
+    method: 'GET',
+  });
 }
 
 const fetchInitialCards = () => {
-  return fetch('https://nomoreparties.co/v1/wff-cohort-27/cards', {
-    headers: {
-      authorization: 'a5b41191-4295-4942-b6d9-1f6a428d0b55'
-    }
+  return request({
+    route: 'cards',
+    method: 'GET',
   })
-    .then(res => res.json());
 }
 
 const submitUserInfo = (nameInputText,jobInputText) => {
-  return fetch('https://nomoreparties.co/v1/wff-cohort-27/users/me', {
+  return request({
+    route: 'users/me',
     method: 'PATCH',
-    headers: {
-      authorization: 'a5b41191-4295-4942-b6d9-1f6a428d0b55',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
+    body: {
       name: nameInputText,
       about: jobInputText
-    })
+    }
   })
-    .then(res => res.json());
 }
 
 const submitNewCard = (cardName, cardLink) => {
-  return fetch('https://nomoreparties.co/v1/wff-cohort-27/cards', {
+  return request({
+    route: 'cards',
     method: 'POST',
-    headers: {
-      authorization: 'a5b41191-4295-4942-b6d9-1f6a428d0b55',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
+    body: {
       name: cardName,
       link: cardLink
-    })
-  })
-    .then(res => res.json());
+    }
+  });
 }
 
 const deleteCardById = (cardId) => {
-  return fetch(`https://nomoreparties.co/v1/wff-cohort-27/cards/${cardId}`, {
-    method: 'DELETE',
-    headers: {
-      authorization: 'a5b41191-4295-4942-b6d9-1f6a428d0b55',
-      'Content-Type': 'application/json'
-    }
+  return request({
+    route: `cards/${cardId}`,
+    method: 'DELETE'
   })
-    .then(res => res.json());
 }
 
 const openFullImage = (imagePopupData) => {
