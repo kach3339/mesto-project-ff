@@ -6,7 +6,7 @@ const config = {
   }
 }
 
-export const request = ({route, method, body}) => {
+const request = ({route, method, body}) => {
   return fetch(`${config.baseUrl}/${route}`, {
     method,
     headers: config.headers,
@@ -16,9 +16,67 @@ export const request = ({route, method, body}) => {
       if (res.ok) {
         return res.json();
       }
+
       return Promise.reject(`Ошибка: ${res.status}`);
     })
     .catch((err) => {
       console.log(err);
     });
+}
+
+export const fetchUser = () => {
+  return request({
+    route: 'users/me',
+    method: 'GET',
+  });
+}
+
+export const fetchInitialCards = () => {
+  return request({
+    route: 'cards',
+    method: 'GET',
+  })
+}
+
+export const submitUserInfo = (nameInputText,jobInputText) => {
+  return request({
+    route: 'users/me',
+    method: 'PATCH',
+    body: {
+      name: nameInputText,
+      about: jobInputText
+    }
+  })
+}
+
+export const submitNewCard = (cardName, cardLink) => {
+  return request({
+    route: 'cards',
+    method: 'POST',
+    body: {
+      name: cardName,
+      link: cardLink
+    }
+  });
+}
+
+export const deleteCardById = (cardId) => {
+  return request({
+    route: `cards/${cardId}`,
+    method: 'DELETE'
+  })
+}
+
+export const addLikeByCardId = (cardId) => {
+  return request({
+    route: `cards/likes/${cardId}`,
+    method: 'PUT',
+  })
+}
+
+export const deleteLikeByCardId = (cardId) => {
+  return request({
+    route: `cards/likes/${cardId}`,
+    method: 'DELETE',
+  })
 }

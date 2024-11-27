@@ -3,10 +3,18 @@ import { openModal, closeModal } from './components/modal';
 import {
   createCard,
   deleteCard,
-  likeClick
+  updateCardLikesQuantity
 } from './components/card';
 import {enableValidation, clearValidation} from './components/validation'
-import {request} from "./components/api";
+import {
+  deleteCardById,
+  fetchInitialCards,
+  fetchUser,
+  submitUserInfo,
+  submitNewCard,
+  addLikeByCardId,
+  deleteLikeByCardId
+} from "./components/api";
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
@@ -39,51 +47,15 @@ const validationConfig = {
   activeErrorClass: 'form__input-error_active'
 }
 
-/// api
-const fetchUser = () => {
-  return request({
-    route: 'users/me',
-    method: 'GET',
-  });
+const handleCardLikeClick = (cardId, isLiked) => {
+  const toggleLikePromise = isLiked
+    ? addLikeByCardId(cardId)
+    : deleteLikeByCardId(cardId)
+
+  toggleLikePromise.then(updateCardLikesQuantity)
 }
 
-const fetchInitialCards = () => {
-  return request({
-    route: 'cards',
-    method: 'GET',
-  })
-}
-
-const submitUserInfo = (nameInputText,jobInputText) => {
-  return request({
-    route: 'users/me',
-    method: 'PATCH',
-    body: {
-      name: nameInputText,
-      about: jobInputText
-    }
-  })
-}
-
-const submitNewCard = (cardName, cardLink) => {
-  return request({
-    route: 'cards',
-    method: 'POST',
-    body: {
-      name: cardName,
-      link: cardLink
-    }
-  });
-}
-
-const deleteCardById = (cardId) => {
-  return request({
-    route: `cards/${cardId}`,
-    method: 'DELETE'
-  })
-}
-
-const openFullImage = (imagePopupData) => {
+const openFullImageModal = (imagePopupData) => {
   placeCardImagePopup.src = imagePopupData.link;
   placeCardImagePopup.alt = imagePopupData.name;
   placeCardCaption.textContent = imagePopupData.name;
@@ -103,18 +75,10 @@ const handleEditProfileFormSubmit = evt => {
 
   submitUserInfo(nameInput.value, jobInput.value)
     .then((user) => {
-      renderUser(user);
+      updateUserData(user);
     });
 
   closeModal(popupTypeEdit);
-};
-
-const prependCard = placeCardElement => {
-  placesCardContainer.prepend(placeCardElement);
-};
-
-const appendCard = placeCardElement => {
-  placesCardContainer.append(placeCardElement);
 };
 
 const newCardFormSubmit = evt => {
@@ -127,9 +91,9 @@ const newCardFormSubmit = evt => {
           cardData: card,
           showRemoveButton: true,
           eventListeners: {
-            openFullImage,
+            openFullImage: openFullImageModal,
             deleteClick: openCardDeleteModal,
-            likeClick
+            likeClick: handleCardLikeClick
           }
         }
       );
@@ -155,6 +119,20 @@ const deleteCardFormSubmit = evt => {
       deleteCard(cardElementToDelete);
       closeModal(popupTypeCardDelete);
     });
+}
+
+const prependCard = placeCardElement => {
+  placesCardContainer.prepend(placeCardElement);
+};
+
+const appendCard = placeCardElement => {
+  placesCardContainer.append(placeCardElement);
+};
+
+const updateUserData = (user) => {
+  nameProfile.textContent = user.name;
+  occupationProfile.textContent = user.about;
+  imageProfile.style.backgroundImage = `url('${user.avatar}')`;
 }
 
 const setupEventListeners = () => {
@@ -196,12 +174,6 @@ const setupEventListeners = () => {
   deleteCardForm.addEventListener('click', deleteCardFormSubmit);
 };
 
-const renderUser = (user) => {
-  nameProfile.textContent = user.name;
-  occupationProfile.textContent = user.about;
-  imageProfile.style.backgroundImage = `url('${user.avatar}')`;
-}
-
 const renderCards = (initialCards, user) => {
   initialCards.forEach((cardData) => {
     const showRemoveButton = user._id === cardData.owner._id;
@@ -209,9 +181,9 @@ const renderCards = (initialCards, user) => {
       cardData,
       showRemoveButton,
       eventListeners: {
-        openFullImage,
+        openFullImage: openFullImageModal,
         deleteClick: openCardDeleteModal,
-        likeClick
+        likeClick: handleCardLikeClick
       }
     });
     appendCard(placeCardElement);
@@ -222,7 +194,7 @@ setupEventListeners();
 
 Promise.all([fetchUser(), fetchInitialCards()])
   .then(([user, initialCards]) => {
-    renderUser(user);
+    updateUserData(user);
     renderCards(initialCards, user);
   });
 

@@ -1,5 +1,22 @@
 const placeCardTemplate = document.querySelector('#card-template').content.querySelector('.places__item');
 
+const toggleLike = ({
+  cardId,
+  likeButton,
+  likeClick
+}) => {
+  const activeClass = 'card__like-button_is-active'
+
+  likeButton.classList.toggle(activeClass);
+
+  const isLiked = likeButton.classList.contains(activeClass)
+
+  likeClick(
+    cardId,
+    isLiked
+  );
+};
+
 export function createCard({cardData, showRemoveButton, eventListeners}) {
   const placeCardElement = placeCardTemplate.cloneNode(true);
   const placeCardTitle = placeCardElement.querySelector('.card__title');
@@ -30,17 +47,23 @@ export function createCard({cardData, showRemoveButton, eventListeners}) {
   });
 
   likeButton.addEventListener('click', function (){
-    eventListeners.likeClick(likeButton);
+    toggleLike({
+      cardId: cardData._id,
+      likeButton,
+      likeClick: eventListeners.likeClick
+    })
   });
 
   return placeCardElement;
 }
 
+export const updateCardLikesQuantity = (cardData) => {
+  const placeCardElement = document.getElementById(cardData._id);
+  const likesQuantity = placeCardElement.querySelector('.card__like-quantity');
+
+  likesQuantity.textContent = cardData.likes.length;
+}
+
 export const deleteCard = (placeCardElementForDelete) => {
   placeCardElementForDelete.remove();
 };
-
-export const likeClick = (likeButton) => {
-  likeButton.classList.toggle('card__like-button_is-active');
-};
-
