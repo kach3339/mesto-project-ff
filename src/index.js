@@ -2,8 +2,8 @@ import './pages/index.css';
 import {openModal, closeModal, startModalSubmitting} from './components/modal';
 import {
   createCard,
-  deleteCard,
-  updateCardLikesQuantity
+  deleteCard, getIsCardLiked,
+  updateCardLikesData
 } from './components/card';
 import {enableValidation, clearValidation} from './components/validation'
 import {
@@ -51,12 +51,19 @@ const validationConfig = {
   activeErrorClass: 'form__input-error_active'
 }
 
-const handleCardLikeClick = (cardId, isLiked) => {
-  const toggleLikePromise = isLiked
+let currentUserId = '';
+
+const handleCardLikeClick = (cardId, likeButton) => {
+  const prevIsLiked = getIsCardLiked(likeButton)
+  const nextIsLiked = !prevIsLiked
+
+  const toggleLikePromise = nextIsLiked
     ? addLikeByCardId(cardId)
     : deleteLikeByCardId(cardId)
 
-  toggleLikePromise.then(updateCardLikesQuantity)
+  toggleLikePromise.then((cardData) => {
+    updateCardLikesData(cardData, likeButton)
+  })
 }
 
 const openFullImageModal = (imagePopupData) => {
@@ -118,7 +125,7 @@ const newCardFormSubmit = evt => {
       const placeCardElement = createCard(
         {
           cardData: card,
-          showRemoveButton: true,
+          currentUserId,
           eventListeners: {
             openFullImage: openFullImageModal,
             deleteClick: openCardDeleteModal,
@@ -170,6 +177,8 @@ const appendCard = placeCardElement => {
 };
 
 const updateUserData = (user) => {
+  currentUserId = user._id;
+
   nameProfile.textContent = user.name;
   occupationProfile.textContent = user.about;
   imageProfile.style.backgroundImage = `url('${user.avatar}')`;
@@ -225,10 +234,9 @@ const setupEventListeners = () => {
 
 const renderCards = (initialCards, user) => {
   initialCards.forEach((cardData) => {
-    const showRemoveButton = user._id === cardData.owner._id;
     const placeCardElement = createCard({
       cardData,
-      showRemoveButton,
+      currentUserId: user._id,
       eventListeners: {
         openFullImage: openFullImageModal,
         deleteClick: openCardDeleteModal,

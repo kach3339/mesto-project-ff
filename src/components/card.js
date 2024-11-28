@@ -1,23 +1,11 @@
 const placeCardTemplate = document.querySelector('#card-template').content.querySelector('.places__item');
+const placeCardIsActiveClassName = 'card__like-button_is-active'
 
-const toggleLike = ({
-  cardId,
-  likeButton,
-  likeClick
-}) => {
-  const activeClass = 'card__like-button_is-active'
+const toggleCardLikeClassName = (likeButton) => {
+  likeButton.classList.toggle(placeCardIsActiveClassName);
+}
 
-  likeButton.classList.toggle(activeClass);
-
-  const isLiked = likeButton.classList.contains(activeClass)
-
-  likeClick(
-    cardId,
-    isLiked
-  );
-};
-
-export function createCard({cardData, showRemoveButton, eventListeners}) {
+export function createCard({cardData, currentUserId, eventListeners}) {
   const placeCardElement = placeCardTemplate.cloneNode(true);
   const placeCardTitle = placeCardElement.querySelector('.card__title');
   const placeCardImage = placeCardElement.querySelector('.card__image');
@@ -25,11 +13,20 @@ export function createCard({cardData, showRemoveButton, eventListeners}) {
   const likeButton = placeCardElement.querySelector('.card__like-button');
   const likesQuantity = placeCardElement.querySelector('.card__like-quantity');
 
+  const isLikedByCurrentUser = cardData.likes.some((like) => {
+    return like._id === currentUserId;
+  });
+  const showRemoveButton = currentUserId === cardData.owner._id;
+
   placeCardElement.id = cardData._id;
   placeCardTitle.textContent = cardData.name;
   placeCardImage.src = cardData.link;
   placeCardImage.alt = cardData.name;
   likesQuantity.textContent = cardData.likes.length;
+
+  if (isLikedByCurrentUser) {
+    toggleCardLikeClassName(likeButton);
+  }
 
   if (showRemoveButton) {
     placeCardButtonRemove.addEventListener('click', function () {
@@ -47,20 +44,24 @@ export function createCard({cardData, showRemoveButton, eventListeners}) {
   });
 
   likeButton.addEventListener('click', function (){
-    toggleLike({
-      cardId: cardData._id,
-      likeButton,
-      likeClick: eventListeners.likeClick
-    })
+    eventListeners.likeClick(
+      cardData._id,
+      likeButton
+    )
   });
 
   return placeCardElement;
 }
 
-export const updateCardLikesQuantity = (cardData) => {
+export const getIsCardLiked = (likeButton) => {
+  return likeButton.classList.contains(placeCardIsActiveClassName)
+};
+
+export const updateCardLikesData = (cardData, likeButton) => {
   const placeCardElement = document.getElementById(cardData._id);
   const likesQuantity = placeCardElement.querySelector('.card__like-quantity');
 
+  toggleCardLikeClassName(likeButton);
   likesQuantity.textContent = cardData.likes.length;
 }
 
