@@ -49,6 +49,16 @@ export const submitUserInfo = (nameInputText,jobInputText) => {
   })
 }
 
+export const submitUserAvatar = (avatarInputLink) => {
+  return request({
+    route: 'users/me/avatar',
+    method: 'PATCH',
+    body: {
+      avatar: avatarInputLink
+    }
+  })
+}
+
 export const submitNewCard = (cardName, cardLink) => {
   return request({
     route: 'cards',

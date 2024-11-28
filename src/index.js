@@ -11,10 +11,11 @@ import {
   fetchInitialCards,
   fetchUser,
   submitUserInfo,
+  submitUserAvatar,
   submitNewCard,
   addLikeByCardId,
   deleteLikeByCardId
-} from "./components/api";
+} from './components/api';
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
@@ -23,13 +24,16 @@ const popupTypeEdit = document.querySelector('.popup_type_edit');
 const popupTypeNewCard = document.querySelector('.popup_type_new-card');
 const popupTypeImages = document.querySelector('.popup_type_image');
 const popupTypeCardDelete = document.querySelector('.popup_type_card-delete');
+const popupTypeAvatarEdit = document.querySelector('.popup_type_avatar');
 const editProfileForm = document.forms['edit-profile'];
 const createCardForm = document.forms['new-place'];
 const deleteCardForm = document.forms['delete-card'];
+const editAvatarForm = document.forms['change-avatar'];
 
-const nameProfile = document.querySelector('.profile__title')
+const nameProfile = document.querySelector('.profile__title');
 const occupationProfile = document.querySelector('.profile__description');
 const imageProfile = document.querySelector('.profile__image');
+const avatarUrlInput = document.querySelector('.popup__input_type_avatar-url');
 const nameInput = document.querySelector('.popup__input_type_name');
 const jobInput = document.querySelector('.popup__input_type_description');
 const placeNameInput = document.querySelector('.popup__input_type_card-name');
@@ -69,6 +73,17 @@ const openCardDeleteModal = (cardId) => {
 
   openModal(popupTypeCardDelete);
 }
+
+const handleEditAvatarFormSubmit = evt => {
+  evt.preventDefault();
+
+  submitUserAvatar(avatarUrlInput.value)
+    .then((user) => {
+      updateUserData(user);
+    });
+
+  closeModal(popupTypeAvatarEdit);
+};
 
 const handleEditProfileFormSubmit = evt => {
   evt.preventDefault();
@@ -136,6 +151,13 @@ const updateUserData = (user) => {
 }
 
 const setupEventListeners = () => {
+  imageProfile.addEventListener('click', () => {
+    openModal(popupTypeAvatarEdit);
+
+    editAvatarForm.reset();
+    clearValidation(editAvatarForm, validationConfig);
+  })
+
   profileEditButton.addEventListener('click', () => {
     nameInput.value = nameProfile.textContent;
     jobInput.value = occupationProfile.textContent;
@@ -166,6 +188,8 @@ const setupEventListeners = () => {
       }
     });
   });
+
+  editAvatarForm.addEventListener('submit', handleEditAvatarFormSubmit);
 
   editProfileForm.addEventListener('submit', handleEditProfileFormSubmit);
 

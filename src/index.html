@@ -78,6 +78,20 @@
     </form>
   </div>
 </div>
+<div class="popup popup_type_avatar">
+  <div class="popup__content popup__content_no-min-height">
+    <button type="button" class="popup__close"></button>
+    <h3 class="popup__title">Обновить аватар</h3>
+    <form class="popup__form" name="change-avatar">
+      <input novalidate id="change-avatar-url" type="url" name="avatar-url" class="popup__input popup__input_type_avatar-url" pattern="^(https?:\/\/.*)" placeholder="Ссылка на аватар" data-error-message="Поле может содержать только URL" required
+      />
+      <span class="change-avatar-url-error popup__error"></span>
+      <button type="submit" class="button popup__button" data-button-text="Да">
+        Сохранить
+      </button>
+    </form>
+  </div>
+</div>
 
 <template id="card-template">
   <li id="" class="places__item card">
