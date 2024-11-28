@@ -83,8 +83,11 @@ const handleEditAvatarFormSubmit = evt => {
     .then((user) => {
       updateUserData(user);
 
-      completeModalSubmitting();
       closeModal(popupTypeAvatarEdit);
+    })
+    .catch((err) => console.log(err))
+    .finally(() => {
+      completeModalSubmitting();
     });
 };
 
@@ -97,8 +100,11 @@ const handleEditProfileFormSubmit = evt => {
     .then((user) => {
       updateUserData(user);
 
-      completeModalSubmitting();
       closeModal(popupTypeEdit);
+    })
+    .catch((err) => console.log(err))
+    .finally(() => {
+      completeModalSubmitting();
     });
 };
 
@@ -126,8 +132,11 @@ const newCardFormSubmit = evt => {
       placeNameInput.value = '';
       placeLinkInput.value = '';
 
-      completeModalSubmitting();
       closeModal(popupTypeNewCard);
+    })
+    .catch((err) => console.log(err))
+    .finally(() => {
+      completeModalSubmitting();
     });
 };
 
@@ -144,8 +153,11 @@ const deleteCardFormSubmit = evt => {
     .then(()=> {
       deleteCard(cardElementToDelete);
 
-      completeModalSubmitting();
       closeModal(popupTypeCardDelete);
+    })
+    .catch((err) => console.log(err))
+    .finally(() => {
+      completeModalSubmitting();
     });
 }
 
@@ -233,6 +245,7 @@ Promise.all([fetchUser(), fetchInitialCards()])
   .then(([user, initialCards]) => {
     updateUserData(user);
     renderCards(initialCards, user);
-  });
+  })
+  .catch((err) => console.log(err));
 
 enableValidation(validationConfig);

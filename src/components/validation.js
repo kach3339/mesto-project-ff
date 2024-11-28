@@ -1,8 +1,17 @@
 export const clearValidation = (formElement, config) => {
+  const buttonElement = formElement.querySelector(
+    config.submitButtonSelector
+  );
   const inputList = Array.from(formElement.querySelectorAll(config.inputSelector));
 
   inputList.forEach((inputElement) => {
     hideInputError({formElement, inputElement, config});
+  });
+
+  toggleButtonState({
+    inputList,
+    buttonElement,
+    inactiveButtonClass: config.inactiveButtonClass
   });
 };
 

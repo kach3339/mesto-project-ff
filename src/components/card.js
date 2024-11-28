@@ -31,7 +31,11 @@ export function createCard({cardData, showRemoveButton, eventListeners}) {
   placeCardImage.alt = cardData.name;
   likesQuantity.textContent = cardData.likes.length;
 
-  if (!showRemoveButton) {
+  if (showRemoveButton) {
+    placeCardButtonRemove.addEventListener('click', function () {
+      eventListeners.deleteClick(cardData._id);
+    });
+  } else {
     placeCardButtonRemove.remove();
   }
 
@@ -40,10 +44,6 @@ export function createCard({cardData, showRemoveButton, eventListeners}) {
       name: cardData.name,
       link: cardData.link
     });
-  });
-
-  placeCardButtonRemove.addEventListener('click', function (){
-    eventListeners.deleteClick(cardData._id);
   });
 
   likeButton.addEventListener('click', function (){

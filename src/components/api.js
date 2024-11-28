@@ -18,9 +18,6 @@ const request = ({route, method, body}) => {
       }
 
       return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .catch((err) => {
-      console.log(err);
     });
 }
 
