@@ -1,5 +1,5 @@
 import './pages/index.css';
-import { openModal, closeModal } from './components/modal';
+import {openModal, closeModal, startModalSubmitting} from './components/modal';
 import {
   createCard,
   deleteCard,
@@ -77,27 +77,35 @@ const openCardDeleteModal = (cardId) => {
 const handleEditAvatarFormSubmit = evt => {
   evt.preventDefault();
 
+  const { completeModalSubmitting } = startModalSubmitting(popupTypeAvatarEdit);
+
   submitUserAvatar(avatarUrlInput.value)
     .then((user) => {
       updateUserData(user);
-    });
 
-  closeModal(popupTypeAvatarEdit);
+      completeModalSubmitting();
+      closeModal(popupTypeAvatarEdit);
+    });
 };
 
 const handleEditProfileFormSubmit = evt => {
   evt.preventDefault();
 
+  const { completeModalSubmitting } = startModalSubmitting(popupTypeEdit);
+
   submitUserInfo(nameInput.value, jobInput.value)
     .then((user) => {
       updateUserData(user);
-    });
 
-  closeModal(popupTypeEdit);
+      completeModalSubmitting();
+      closeModal(popupTypeEdit);
+    });
 };
 
 const newCardFormSubmit = evt => {
   evt.preventDefault();
+
+  const { completeModalSubmitting } = startModalSubmitting(popupTypeNewCard);
 
   submitNewCard(placeNameInput.value, placeLinkInput.value)
     .then(card => {
@@ -114,12 +122,13 @@ const newCardFormSubmit = evt => {
       );
 
       prependCard(placeCardElement);
+
+      placeNameInput.value = '';
+      placeLinkInput.value = '';
+
+      completeModalSubmitting();
+      closeModal(popupTypeNewCard);
     });
-
-  placeNameInput.value = '';
-  placeLinkInput.value = '';
-
-  closeModal(popupTypeNewCard);
 };
 
 const deleteCardFormSubmit = evt => {
@@ -129,9 +138,13 @@ const deleteCardFormSubmit = evt => {
   const cardId = submitButton.dataset.cardId;
   const cardElementToDelete = document.getElementById(cardId);
 
+  const { completeModalSubmitting } = startModalSubmitting(popupTypeCardDelete, 'Удаление...');
+
   deleteCardById(cardId)
     .then(()=> {
       deleteCard(cardElementToDelete);
+
+      completeModalSubmitting();
       closeModal(popupTypeCardDelete);
     });
 }

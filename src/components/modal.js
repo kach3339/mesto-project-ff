@@ -17,3 +17,18 @@ export function closeModal(popup){
 
   document.removeEventListener('keydown', handleEscKey);
 }
+
+export function startModalSubmitting (popup, submittingText = 'Сохранение...') {
+  const submitButton = popup.querySelector('.popup__button');
+  const originalCaption = submitButton.textContent;
+
+  submitButton.textContent = submittingText;
+  submitButton.disabled = 'true';
+
+  return {
+    completeModalSubmitting: () => {
+      submitButton.textContent = originalCaption;
+      submitButton.disabled = 'false';
+    }
+  };
+}
